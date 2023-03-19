@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../Cache.ts"],
+  "sourcesContent": ["export class Cache<T>{\n  cacheMap: Map<string, { data: T, invalidate: void }>;\n  constructor() {\n    this.cacheMap = new Map();\n  }\n  get(key: string) {\n    let res = this.cacheMap.get(key);\n    if (!res) {\n      return null;\n    }\n    return res.data;\n  }\n\n  set(key: string, data: T) {\n    this.cacheMap.set(key, {\n      data: data,\n      invalidate: (() => {\n        let c = setTimeout(() => {\n          console.log(\"cache invalidated\");\n          this.cacheMap.delete(key);\n          clearTimeout(c);\n        }, 10 * 1000);\n      })()\n    })\n  }\n}"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAO,MAAM,MAAQ;AAAA,EACnB;AAAA,EACA,cAAc;AACZ,SAAK,WAAW,oBAAI,IAAI;AAAA,EAC1B;AAAA,EACA,IAAI,KAAa;AACf,QAAI,MAAM,KAAK,SAAS,IAAI,GAAG;AAC/B,QAAI,CAAC,KAAK;AACR,aAAO;AAAA,IACT;AACA,WAAO,IAAI;AAAA,EACb;AAAA,EAEA,IAAI,KAAa,MAAS;AACxB,SAAK,SAAS,IAAI,KAAK;AAAA,MACrB;AAAA,MACA,aAAa,MAAM;AACjB,YAAI,IAAI,WAAW,MAAM;AACvB,kBAAQ,IAAI,mBAAmB;AAC/B,eAAK,SAAS,OAAO,GAAG;AACxB,uBAAa,CAAC;AAAA,QAChB,GAAG,KAAK,GAAI;AAAA,MACd,GAAG;AAAA,IACL,CAAC;AAAA,EACH;AACF;",
+  "names": []
+}

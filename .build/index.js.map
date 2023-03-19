@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../index.ts"],
+  "sourcesContent": ["import { Cache } from './Cache';\nconst test = new Cache<unknown>();\n\nconst fetch = (url: RequestInfo, init?: RequestInit) =>  import(\"node-fetch\").then(({ default: fetch }) => fetch(url, init));\n\nasync function fetching() {\n  let res = test.get(\"pikachu\");\n  if (res == null) {\n    console.log(\"fetching from pokeAPI\");\n    res = await (await fetch(\"https://pokeapi.co/api/v2/pokemon/ditto\")).json();\n    test.set(\"pikachu\", res);\n  }\n  return res;\n}\n// test.set(\"junior\", 20);\n// test.get(\"junior\");\n// let a = new Map();\n// a.set(\"test\",{\n//   data:\"\",\n//   invalidate : (()=>{\n//     let c = setTimeout(()=>{\n//       a.delete(\"test\");\n//       clearTimeout(c);\n//     },500)\n//   })()\n// })\nlet a = setInterval(async () => {\n  const res = await fetching();\n  console.log(res);\n  if (res == null) {\n    console.log(\"cache invalidated\");\n    clearInterval(a);\n  }\n}, 1000);\n\n// console.log(a);"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA,mBAAsB;AACtB,MAAM,OAAO,IAAI,mBAAe;AAEhC,MAAM,QAAQ,CAAC,KAAkB,SAAwB,OAAO,cAAc,KAAK,CAAC,EAAE,SAASA,OAAM,MAAMA,OAAM,KAAK,IAAI,CAAC;AAE3H,eAAe,WAAW;AACxB,MAAI,MAAM,KAAK,IAAI,SAAS;AAC5B,MAAI,OAAO,MAAM;AACf,YAAQ,IAAI,uBAAuB;AACnC,UAAM,OAAO,MAAM,MAAM,yCAAyC,GAAG,KAAK;AAC1E,SAAK,IAAI,WAAW,GAAG;AAAA,EACzB;AACA,SAAO;AACT;AAaA,IAAI,IAAI,YAAY,YAAY;AAC9B,QAAM,MAAM,MAAM,SAAS;AAC3B,UAAQ,IAAI,GAAG;AACf,MAAI,OAAO,MAAM;AACf,YAAQ,IAAI,mBAAmB;AAC/B,kBAAc,CAAC;AAAA,EACjB;AACF,GAAG,GAAI;",
+  "names": ["fetch"]
+}
